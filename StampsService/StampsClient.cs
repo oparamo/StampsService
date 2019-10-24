@@ -10341,7 +10341,7 @@ namespace StampsService
         
         private System.DateTime deliveryDateField;
         
-        private decimal insuredValueField;
+        private decimal? insuredValueField;
         
         private decimal registeredValueField;
         
@@ -10404,10 +10404,10 @@ namespace StampsService
             this.heightField = 0D;
             this.shipDateField = new System.DateTime(0);
             this.deliveryDateField = new System.DateTime(0);
-            this.insuredValueField = ((decimal)(0.00m));
-            this.registeredValueField = ((decimal)(0.00m));
-            this.cODValueField = ((decimal)(0.00m));
-            this.declaredValueField = ((decimal)(0.00m));
+            // this.insuredValueField = ((decimal)(0.00m));
+            // this.registeredValueField = ((decimal)(0.00m));
+            // this.cODValueField = ((decimal)(0.00m));
+            // this.declaredValueField = ((decimal)(0.00m));
             this.nonMachinableField = false;
             this.rectangularShapedField = true;
             this.effectiveWeightInOuncesField = 0;
@@ -10687,8 +10687,8 @@ namespace StampsService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
-        public decimal InsuredValue
+        // [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
+        public decimal? InsuredValue
         {
             get
             {
@@ -10699,10 +10699,21 @@ namespace StampsService
                 this.insuredValueField = value;
             }
         }
+
+        // /// <remarks/>
+        // [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        // [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
+        public bool InsuredValueSpecified
+        {
+            get
+            {
+                return this.insuredValueField != null;
+            }
+        }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
+        // [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
         public decimal RegisteredValue
         {
             get
@@ -10717,7 +10728,7 @@ namespace StampsService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
+        // [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
         public decimal CODValue
         {
             get
@@ -10732,7 +10743,7 @@ namespace StampsService
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=21)]
-        [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
+        // [System.ComponentModel.DefaultValueAttribute(typeof(decimal), "0.0")]
         public decimal DeclaredValue
         {
             get
