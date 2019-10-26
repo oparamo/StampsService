@@ -115,7 +115,7 @@ namespace StampsService.Tests
             // create a track shipment object, either trackingNumber or stampsTxID could be used here
             //var trackShipmentRequest = new TrackShipmentRequest(authToken, stampsTxID);
             var trackShipmentRequest = new TrackShipmentRequest(authToken, trackingNumber);
-            // unfortunately this request doesn't work with the test tracking number created before
+            // unfortunately this request doesn't work with tracking numbers from test labels
             var trackShipmentResponse = await client.TrackShipmentAsync(trackShipmentRequest);
             var trackingEvents = trackShipmentResponse.TrackingEvents;
 
