@@ -33,6 +33,8 @@ namespace StampsService.Tests
             rateQuery.FromZIPCode = "75201";
             rateQuery.ToZIPCode = "75207";
             rateQuery.ShipDate = DateTime.Now;
+            rateQuery.PackageType = PackageTypeV9.Package;
+            rateQuery.WeightLb = 12;
 
             // get rates based off the given rate object
             var getRatesRequest = new GetRatesRequest(authToken, rateQuery);
@@ -41,6 +43,9 @@ namespace StampsService.Tests
             // pick a rate to create indicium later and update the authtoken
             // a rate is chosen here just for demo purposes
             var rate = getRatesResponse.Rates[0];
+            // the rate objects contain all possible add-ons, some of them are not compatible with each other
+            // for that reason, set the rate add-ons to be a single item array to avoid any issues in this demo
+            rate.AddOns = Array.FindAll(rate.AddOns, addOn => addOn.AddOnType == AddOnTypeV15.USADC);
             authToken = getRatesResponse.Authenticator;
 
             // create and cleanse a "from" address
@@ -88,7 +93,10 @@ namespace StampsService.Tests
             createIndiciumRequest.Rate = rate;
             createIndiciumRequest.From = fromAddress;
             createIndiciumRequest.To = toAddress;
+            // setting SampleOnly to true (false by default) allows creating testing labels in the testing environment
+            createIndiciumRequest.SampleOnly = true;
 
+            // if this request wasn't a SampleOnly, you may need to ensure your account has a postage balance to pay for the shipping label
             var createIndiciumResponse = await client.CreateIndiciumAsync(createIndiciumRequest);
 
             // get some important shipping details from the createIndiciumResponse and update the auth token
@@ -105,7 +113,9 @@ namespace StampsService.Tests
             Console.WriteLine($"Stamps transaction ID: {stampsTxID}");
 
             // create a track shipment object, either trackingNumber or stampsTxID could be used here
+            //var trackShipmentRequest = new TrackShipmentRequest(authToken, stampsTxID);
             var trackShipmentRequest = new TrackShipmentRequest(authToken, trackingNumber);
+            // unfortunately this request doesn't work with the test tracking number created before
             var trackShipmentResponse = await client.TrackShipmentAsync(trackShipmentRequest);
             var trackingEvents = trackShipmentResponse.TrackingEvents;
 
